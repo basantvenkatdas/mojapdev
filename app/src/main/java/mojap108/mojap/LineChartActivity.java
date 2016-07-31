@@ -206,13 +206,14 @@ public class LineChartActivity extends Activity implements OnChartValueSelectedL
 
     private void requestData(final String timePeriod) {
         final DigitsData mData = AppData.getInstance(getApplicationContext()).getDigitsData();
-        String url = Constants.BASE_URL + Constants.GET_ACTIVITY+"/"+mData.getAuthId()+"/week";//+timePeriod;
+        String url = Constants.BASE_URL + Constants.GET_ACTIVITY+"/"+mData.getAuthId()+"/"+timePeriod+"?offset="+(offsetHours/(3600*1000));
         RequestQueue mQueue = Volley.newRequestQueue(getApplicationContext());
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
+                        Log.d("CharData", "JSON response="+response.toString());
                         parseActivityData(response, timePeriod);
                         Log.d("MojapDataUpload", "activity successfully uploaded");
                     }
@@ -273,11 +274,11 @@ public class LineChartActivity extends Activity implements OnChartValueSelectedL
     }
 
     private String getMonthDay(String value) {
-        value = value.substring(0, value.lastIndexOf("."));
+      //  value = value.substring(0, value.lastIndexOf("."));
         Calendar cal1  = getCalendar(value);
         int dayOfMonth = cal1.get(Calendar.DAY_OF_MONTH);
         int month = cal1.get(Calendar.MONTH);
-        return String.valueOf(month)+"/"+String.valueOf(dayOfMonth);
+        return String.valueOf(month+1)+"/"+String.valueOf(dayOfMonth+1);
     }
 
     public Calendar getCalendar(String dateString) {
@@ -286,7 +287,7 @@ public class LineChartActivity extends Activity implements OnChartValueSelectedL
             Date date = formatter.parse(dateString);
             Calendar cal = Calendar.getInstance();
             cal.setTime(date);
-            cal.setTimeInMillis(cal.getTimeInMillis() + offsetHours);
+            cal.setTimeInMillis(cal.getTimeInMillis() /*+ offsetHours*/);
             return cal;
         } catch (Exception e) {
             // TODO Auto-generated catch block
@@ -297,7 +298,7 @@ public class LineChartActivity extends Activity implements OnChartValueSelectedL
 
 
     private String getWeekDay(String value) {
-        value = value.substring(0, value.lastIndexOf("."));
+        //value = value.substring(0, value.lastIndexOf("."));
         Calendar cal1  = getCalendar(value);
         int day = cal1.get(Calendar.DAY_OF_WEEK);
         String dayOfWeek = "";
@@ -330,7 +331,7 @@ public class LineChartActivity extends Activity implements OnChartValueSelectedL
     }
 
     private String getHoursString(String val) {
-        val = val.substring(0, val.lastIndexOf("."));
+     //   val = val.substring(0, val.lastIndexOf("."));
         Calendar cal1  = getCalendar(val);
         int hour = cal1.get(Calendar.HOUR_OF_DAY);
         int temp = hour % 12;

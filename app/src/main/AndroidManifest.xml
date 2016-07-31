@@ -3,6 +3,7 @@
     package="mojap108.mojap">
 
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
     <application
         android:name=".MoJapApplication"
@@ -29,6 +30,18 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_mo_jap_main"
             android:theme="@style/FullscreenTheme" />
+
+        <receiver
+            android:name=".MyGcmBroadCastReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
+                <category android:name="mojap108.mojap" />
+            </intent-filter>
+        </receiver>
+
         <!--
  ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.

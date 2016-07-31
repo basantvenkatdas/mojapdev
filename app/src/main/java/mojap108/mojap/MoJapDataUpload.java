@@ -15,6 +15,7 @@ import org.json.JSONObject;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -26,17 +27,34 @@ public class MoJapDataUpload {
     private Context mContext;
     private int UPLOAD_INTERVAL = 60 * 60 * 1000;
     private Timer timer;
-    private TimerTask timerTask = new TimerTask() {
-        @Override
-        public void run() {
-            Log.d("MojapDataUpload", "timertask start run");
-            uploadCurrentBeadCount();
-        }
-    };
+    private TimerTask timerTask = null;
+    private long offsetHours;
+
+    private TimerTask initTimeTask() {
+        return new TimerTask() {
+            @Override
+            public void run() {
+                Log.d("MojapDataUpload", "timertask start run");
+                uploadCurrentBeadCount();
+            }
+        };
+    }
+
+    private void calculateTimeZonOffset() {
+        Calendar cal1 = Calendar.getInstance();
+        TimeZone tz = cal1.getTimeZone();
+        long msFromEpochGmt = cal1.getTimeInMillis();
+        offsetHours = tz.getOffset(msFromEpochGmt)/(3600 * 1000);
+
+      /*  Calendar mCalendar = new GregorianCalendar();
+        TimeZone mTimeZone = mCalendar.getTimeZone();
+        int mGMTOffset = mTimeZone.getRawOffset();
+        offsetHours =  TimeUnit.HOURS.convert(mGMTOffset, TimeUnit.MILLISECONDS);*/
+    }
 
     private void uploadCurrentBeadCount() {
 
-        String url = Constants.BASE_URL + Constants.CREATE_ACTIVITY;
+        String url = Constants.BASE_URL + Constants.CREATE_ACTIVITY+"?offset="+offsetHours;
         RequestQueue mQueue = Volley.newRequestQueue(mContext.getApplicationContext());
         JSONObject createActivityRequestBody = new JSONObject();
         final DigitsData mData = AppData.getInstance(mContext.getApplicationContext()).getDigitsData();
@@ -71,6 +89,7 @@ public class MoJapDataUpload {
     }
 
     public void startActivityUpload() {
+        calculateTimeZonOffset();
         uploadCurrentBeadCount();
         startTimer();
     }
@@ -81,6 +100,7 @@ public class MoJapDataUpload {
         Calendar cal1 = Calendar.getInstance();
         cal1.setTime(todayDate);
         int min = cal1.get(Calendar.MINUTE);
+        timerTask = initTimeTask();
         timer.schedule(timerTask, (60-min) * 60 * 1000, UPLOAD_INTERVAL);
     }
 

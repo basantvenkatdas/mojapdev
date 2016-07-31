@@ -6,6 +6,7 @@ package mojap108.mojap;
 public interface Constants {
     public static final String BASE_URL = "https://mojapdev.herokuapp.com";
     public static final String LOGIN_API = "/api/login";
+    public static final String INSTALLATION_API = "/api/authId/install";
     public static final String CREATE_ACTIVITY = "/api/activity";
     public static final String GET_ACTIVITY = "/api/activity";
     public static final String PHONE_NO = "phoneNo";
@@ -13,9 +14,13 @@ public interface Constants {
     public static final String USER_ID = "userId";
     public static final String DATETIME = "dateTime";
     public static final String BEEDCOUNT = "beedCount";
+    public static final String GCM_TOKEN = "token";
     public static final int LOGIN_RESPONSE = 1;
+    public static final int INSTALLATION_RESPONSE = 1;
     public static final int PROFILE_HEADER_ITEM = 1;
     public static final int PROFILE_ROW_ITEM = 2;
+    public static final String GCM_SENDERID = "585318721245";
+
 
     public static final String htmlText = "<html><body style=\"text-align:justify\"> %s </body></Html>";
 

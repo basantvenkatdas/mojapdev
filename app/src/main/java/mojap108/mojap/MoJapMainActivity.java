@@ -87,13 +87,26 @@ public class MoJapMainActivity extends Activity implements OnGestureListener {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private String[] mPlanetTitles = {"basant", "gollapudi"};
+    private boolean isLoginSuccessFull = false;
+    private boolean isUploadActivityStarted;
 
     public void storeUserData(LoginData mData) {
+        isLoginSuccessFull = true;
+        doDeviceInstallation();
         AppData.getInstance(this).storeUserData(mData.getId());
         mojapTimerActivity = new MoJapDataUpload(this);
         mojapTimerActivity.startActivityUpload();
+        isUploadActivityStarted = true;
     }
 
+    private void doDeviceInstallation() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                new DeviceInstallation(MoJapMainActivity.this, mHandler).doDeviceInstallation();
+            }
+        }).start();
+    }
 
 
     private  void showErrorMessageQuit(String reason) {
@@ -177,7 +190,7 @@ public class MoJapMainActivity extends Activity implements OnGestureListener {
 
     private ArrayList<ProfileDrawerListItem> getProfileDrawerItems() {
         ArrayList<ProfileDrawerListItem> items = new ArrayList<ProfileDrawerListItem>();
-        items.add(new ProfileDrawerListItem("Basant Gollapudi", R.drawable.app_icon, Constants.PROFILE_HEADER_ITEM));
+        items.add(new ProfileDrawerListItem(AppData.getInstance(this).getUserData().getPhoneNo(), R.drawable.profile_icon, Constants.PROFILE_HEADER_ITEM));
         items.add(new ProfileDrawerListItem("Reset Today", R.drawable.reset_icon, Constants.PROFILE_ROW_ITEM));
         return items;
     }
@@ -341,6 +354,13 @@ public class MoJapMainActivity extends Activity implements OnGestureListener {
     @Override
     public void onStart() {
         super.onStart();
+        if(isLoginSuccessFull && !isUploadActivityStarted) {
+            if(mojapTimerActivity != null){
+                mojapTimerActivity.startActivityUpload();
+                isUploadActivityStarted = true;
+            }
+        }
+
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -361,6 +381,7 @@ public class MoJapMainActivity extends Activity implements OnGestureListener {
     @Override
     public void onStop() {
         if(mojapTimerActivity != null) {
+            isUploadActivityStarted = false;
             mojapTimerActivity.stopActivityUpload();
         }
         super.onStop();
