@@ -69,6 +69,7 @@ public class BeadData {
     private void getSavedBeadData() {
         todayBeadCount = sharedPref.getInt(KEY_DAILYBEADCOUNT,0);
         globalBeadCount= sharedPref.getInt(KEY_GLOBALBEADCOUNT,0);
+        displayTodayBeadCount = sharedPref.getInt(KEY_DAILYBEADCOUNT,0);
     }
 
     private Date getSavedTodayDate() {
