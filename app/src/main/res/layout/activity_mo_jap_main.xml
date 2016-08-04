@@ -58,17 +58,61 @@
             android:layout_alignParentTop="true"
             />
 
+    <RelativeLayout
+        android:id="@+id/centerView1"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/beadimageview"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:scaleType="fitXY"
+            android:layout_margin="10dp"
+            android:src="@drawable/app_icon"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"/>
+
+        <TextView
+            android:id="@+id/mantraview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:textStyle="bold"
+            android:layout_margin="10dp"
+            android:textColor="@android:color/black"
+            android:textSize="24dp"
+            android:text="@string/mantra"
+            android:layout_above="@id/beadimageview"
+            />
+
+        <TextView
+            android:id="@+id/mantraview1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:textStyle="bold"
+            android:layout_margin="10dp"
+            android:textColor="@android:color/black"
+            android:textSize="24dp"
+            android:text="@string/mantra"
+            android:layout_above="@id/beadimageview"
+            />
+
+
         <RelativeLayout
             android:id="@+id/centerView"
             android:layout_width="match_parent"
-            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:layout_above="@id/mantraview"
+            android:layout_margin="20dp"
             android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/beadstext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_alignParentTop="true"
                 android:textSize="20dp"
                 android:textColor="@android:color/black"
                 android:text="Beads today"
@@ -150,39 +194,9 @@
 
 
 
-        <ImageView
-            android:id="@+id/beadimageview"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:scaleType="fitXY"
-            android:layout_margin="10dp"
-            android:src="@drawable/app_icon"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"/>
 
-        <TextView
-            android:id="@+id/mantraview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:textStyle="bold"
-            android:textColor="@android:color/black"
-            android:textSize="24dp"
-            android:text="@string/mantra"
-            android:layout_above="@id/beadimageview"
-            />
+    </RelativeLayout>
 
-        <TextView
-            android:id="@+id/mantraview1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:textStyle="bold"
-            android:textColor="@android:color/black"
-            android:textSize="24dp"
-            android:text="@string/mantra"
-            android:layout_above="@id/beadimageview"
-            />
     </RelativeLayout>
 
     <FrameLayout

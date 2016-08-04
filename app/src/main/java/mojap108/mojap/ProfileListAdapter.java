@@ -69,7 +69,7 @@ public class ProfileListAdapter extends BaseAdapter {
             mHolder.imageView.setVisibility(View.VISIBLE);
             mHolder.imageView.setImageResource(getItem(i).getImageResource());
         }else {
-            mHolder.imageView.setVisibility(View.INVISIBLE);
+            mHolder.imageView.setVisibility(View.GONE);
         }
         return view;
     }

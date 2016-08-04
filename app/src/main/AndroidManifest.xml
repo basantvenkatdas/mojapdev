@@ -13,6 +13,7 @@
         android:theme="@style/CustomDigitsTheme">
         <activity
             android:name=".LoginActivity"
+            android:screenOrientation="portrait"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,6 +28,7 @@
 
         <activity
             android:name=".MoJapMainActivity"
+            android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_mo_jap_main"
             android:theme="@style/FullscreenTheme" />
@@ -50,9 +52,9 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".ChartActivity"></activity>
-        <activity android:name=".LineChartActivity"></activity>
-        <activity android:name=".MojapInfo"></activity>
+        <activity android:name=".ChartActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".LineChartActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".MojapInfo" android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
