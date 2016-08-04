@@ -53,7 +53,7 @@
             android:layout_height="50dp"
             android:scaleType="fitXY"
             android:layout_margin="10dp"
-            android:src="@drawable/history"
+            android:src="@drawable/chart_icon"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             />
@@ -75,10 +75,20 @@
                 android:layout_margin="10dp"
                 />
 
+            <RelativeLayout
+                android:id="@+id/malaCountdup"
+                android:layout_below="@id/beadstext"
+                android:layout_width="154dp"
+                android:layout_centerHorizontal="true"
+                android:layout_height="154dp"
+                android:background="@drawable/circleshape_1"
+                />
+
 
             <RelativeLayout
                 android:id="@+id/malaCount"
                 android:layout_below="@id/beadstext"
+                android:layout_marginTop="2dp"
                 android:layout_width="150dp"
                 android:layout_centerHorizontal="true"
                 android:layout_height="150dp"
@@ -99,7 +109,7 @@
                     android:text="108" />
             </RelativeLayout>
 
-            <TextView
+           <!-- <TextView
                 android:id="@+id/todaymalacounter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -108,7 +118,7 @@
                 android:layout_below="@id/malaCount"
                 android:textSize="20dp"
                 android:textColor="@android:color/black"
-                android:text="2 Malas Today" />
+                android:text="2 Malas Today" />-->
 
 
             <ImageView
@@ -157,7 +167,7 @@
             android:gravity="center_horizontal"
             android:textStyle="bold"
             android:textColor="@android:color/black"
-            android:textSize="20dp"
+            android:textSize="24dp"
             android:text="@string/mantra"
             android:layout_above="@id/beadimageview"
             />
@@ -169,7 +179,7 @@
             android:gravity="center_horizontal"
             android:textStyle="bold"
             android:textColor="@android:color/black"
-            android:textSize="20dp"
+            android:textSize="24dp"
             android:text="@string/mantra"
             android:layout_above="@id/beadimageview"
             />

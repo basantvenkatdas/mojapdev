@@ -114,6 +114,9 @@ public class LineChartActivity extends Activity implements OnChartValueSelectedL
 
        // YAxis leftAxis = mChart.getAxisLeft();
         YAxis leftAxis = mChart.getAxisLeft();
+        leftAxis.setAxisMinValue(0);
+        leftAxis.setAxisLineColor(Color.BLACK);
+        leftAxis.setAxisLineWidth(3);
         leftAxis.removeAllLimitLines(); // reset all limit lines to avoid overlapping lines
        // leftAxis.addLimitLine(ll1);
        // leftAxis.addLimitLine(ll2);
@@ -121,7 +124,7 @@ public class LineChartActivity extends Activity implements OnChartValueSelectedL
         //leftAxis.setAxisMinValue(-50f);
         //leftAxis.setYOffset(20f);
       //  leftAxis.enableGridDashedLine(10f, 10f, 0f);
-        leftAxis.setDrawZeroLine(false);
+        leftAxis.setDrawZeroLine(true);
         leftAxis.setDrawGridLines(false);
         // limit lines are drawn behind data (and not on top)
         leftAxis.setDrawLimitLinesBehindData(false);
@@ -168,16 +171,17 @@ public class LineChartActivity extends Activity implements OnChartValueSelectedL
         final Button weekButton = (Button)findViewById(R.id.weekButton);
         final Button monthButton = (Button)findViewById(R.id.monthButton);
         int blueColor = ContextCompat.getColor(LineChartActivity.this, android.R.color.holo_blue_light);
-        dayButton.setBackgroundColor(blueColor);
+        dayButton.setBackground(LineChartActivity.this.getDrawable(R.drawable.button_day_selected));
 
         dayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int blueColor = ContextCompat.getColor(LineChartActivity.this, android.R.color.holo_blue_light);
                 view.setBackgroundColor(blueColor);
+                view.setBackground(LineChartActivity.this.getDrawable(R.drawable.button_day_selected));
                 requestData("day");
-                weekButton.setBackgroundColor(Color.WHITE);
-                monthButton.setBackgroundColor(Color.WHITE);
+                weekButton.setBackground(LineChartActivity.this.getDrawable(R.drawable.button_week_normal));
+                monthButton.setBackground(LineChartActivity.this.getDrawable(R.drawable.button_month_normal));
             }
         });
 
@@ -186,9 +190,9 @@ public class LineChartActivity extends Activity implements OnChartValueSelectedL
             public void onClick(View view) {
                 int blueColor = ContextCompat.getColor(LineChartActivity.this, android.R.color.holo_blue_light);
                 requestData("week");
-                view.setBackgroundColor(blueColor);
-                dayButton.setBackgroundColor(Color.WHITE);
-                monthButton.setBackgroundColor(Color.WHITE);
+                view.setBackground(LineChartActivity.this.getDrawable(R.drawable.button_week_selected));
+                dayButton.setBackground(LineChartActivity.this.getDrawable(R.drawable.button_day_normal));
+                monthButton.setBackground(LineChartActivity.this.getDrawable(R.drawable.button_month_normal));
             }
         });
 
@@ -196,10 +200,10 @@ public class LineChartActivity extends Activity implements OnChartValueSelectedL
             @Override
             public void onClick(View view) {
                 int blueColor = ContextCompat.getColor(LineChartActivity.this, android.R.color.holo_blue_light);
-                view.setBackgroundColor(blueColor);
+                view.setBackground(LineChartActivity.this.getDrawable(R.drawable.button_month_selected));
                 requestData("month");
-                dayButton.setBackgroundColor(Color.WHITE);
-                weekButton.setBackgroundColor(Color.WHITE);
+                dayButton.setBackground(LineChartActivity.this.getDrawable(R.drawable.button_day_normal));
+                weekButton.setBackground(LineChartActivity.this.getDrawable(R.drawable.button_week_normal));
             }
         });
     }
@@ -258,7 +262,7 @@ public class LineChartActivity extends Activity implements OnChartValueSelectedL
         }else if(timePeriod.equals("week")) {
             mChart.getXAxis().setLabelsToSkip(0);
         }else if(timePeriod.equals("month")) {
-            mChart.getXAxis().setLabelsToSkip(3);
+            mChart.getXAxis().setLabelsToSkip(5);
         }
     }
 
@@ -298,36 +302,10 @@ public class LineChartActivity extends Activity implements OnChartValueSelectedL
 
 
     private String getWeekDay(String value) {
-        //value = value.substring(0, value.lastIndexOf("."));
         Calendar cal1  = getCalendar(value);
-        int day = cal1.get(Calendar.DAY_OF_WEEK);
-        String dayOfWeek = "";
-        switch (day){
-            case Calendar.SUNDAY:
-                dayOfWeek  =  "SUN";
-                break;
-            case Calendar.MONDAY:
-                dayOfWeek  =  "MON";
-                break;
-            case Calendar.TUESDAY:
-                dayOfWeek  =  "TUE";
-                break;
-            case Calendar.WEDNESDAY:
-                dayOfWeek  =  "WED";
-                break;
-            case Calendar.THURSDAY:
-                dayOfWeek  =  "THU";
-                break;
-            case Calendar.FRIDAY:
-                dayOfWeek  =  "FRI";
-                break;
-            case Calendar.SATURDAY:
-                dayOfWeek  =  "SAT";
-                break;
-            default:
-
-        }
-        return dayOfWeek;
+        int dayOfMonth = cal1.get(Calendar.DAY_OF_MONTH);
+        int month = cal1.get(Calendar.MONTH);
+        return String.valueOf(month+1)+"/"+String.valueOf(dayOfMonth+1);
     }
 
     private String getHoursString(String val) {
@@ -349,7 +327,7 @@ public class LineChartActivity extends Activity implements OnChartValueSelectedL
             float val = mBeadCountsDay.get(i).intValue();
             yVals1.add(new Entry(val, i));
         }
-        LineDataSet set1 = new LineDataSet(yVals1, "DataSet 1");
+        LineDataSet set1 = new LineDataSet(yVals1, "Bead Count");
 
 //        BarDataSet set1 = new BarDataSet(yVals1, "BeadCount");
       //  set1.setBarSpacePercent(35f);
@@ -402,7 +380,7 @@ public class LineChartActivity extends Activity implements OnChartValueSelectedL
             yVals1.add(new Entry(val, i));
         }
 
-        LineDataSet set1 = new LineDataSet(yVals1, "DataSet 1");
+        LineDataSet set1 = new LineDataSet(yVals1, "Bead Count");
       //  set1.setBarSpacePercent(35f);
         set1.setColor(Color.BLACK);
         set1.enableDashedLine(10f, 5f, 0f);

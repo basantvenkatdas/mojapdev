@@ -21,6 +21,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.HapticFeedbackConstants;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.GestureDetector;
@@ -33,6 +34,7 @@ import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -89,6 +91,7 @@ public class MoJapMainActivity extends Activity implements OnGestureListener {
     private String[] mPlanetTitles = {"basant", "gollapudi"};
     private boolean isLoginSuccessFull = false;
     private boolean isUploadActivityStarted;
+    private String mantraText = "Om Namah Shivay";
 
     public void storeUserData(LoginData mData) {
         isLoginSuccessFull = true;
@@ -175,6 +178,9 @@ public class MoJapMainActivity extends Activity implements OnGestureListener {
                     beadData.resetTodayBeadCount();
                     refreshViewData();
                     mDrawerLayout.closeDrawer(mDrawerList);
+                }else if(i == 2) {
+                    mDrawerLayout.closeDrawer(mDrawerList);
+                    showSetMantraDialog();
                 }
             }
         });
@@ -191,7 +197,8 @@ public class MoJapMainActivity extends Activity implements OnGestureListener {
     private ArrayList<ProfileDrawerListItem> getProfileDrawerItems() {
         ArrayList<ProfileDrawerListItem> items = new ArrayList<ProfileDrawerListItem>();
         items.add(new ProfileDrawerListItem(AppData.getInstance(this).getUserData().getPhoneNo(), R.drawable.profile_icon, Constants.PROFILE_HEADER_ITEM));
-        items.add(new ProfileDrawerListItem("Reset Today", R.drawable.reset_icon, Constants.PROFILE_ROW_ITEM));
+        items.add(new ProfileDrawerListItem("Reset Bead Count", R.drawable.reset_icon, Constants.PROFILE_ROW_ITEM));
+        items.add(new ProfileDrawerListItem("Set Mantra", R.drawable.reset_icon, Constants.PROFILE_ROW_ITEM));
         return items;
     }
 
@@ -342,14 +349,60 @@ public class MoJapMainActivity extends Activity implements OnGestureListener {
         todayMalaCount.setText(text2);
         TextView mainCounter = (TextView) MoJapMainActivity.this.findViewById(R.id.malaCounttextview);
         mainCounter.setText(String.valueOf(beadData.getTodayDisplayBeadCount()));
-        TextView mainMalaCounter = (TextView) MoJapMainActivity.this.findViewById(R.id.todaymalacounter);
-        String text3 = MoJapConstants.todayMalaCounterString.replace("COUNT", String.valueOf(beadData.getTodayMalaCount()));
-        mainMalaCounter.setText(text3);
+        TextView mantraSet1 = (TextView) MoJapMainActivity.this.findViewById(R.id.mantraview);
+        mantraSet1.setText(mantraText);
+        TextView mantraSet2 = (TextView) MoJapMainActivity.this.findViewById(R.id.mantraview1);
+        mantraSet2.setText(mantraText);
+        //TextView mainMalaCounter = (TextView) MoJapMainActivity.this.findViewById(R.id.todaymalacounter);
+       // String text3 = MoJapConstants.todayMalaCounterString.replace("COUNT", String.valueOf(beadData.getTodayMalaCount()));
+       // mainMalaCounter.setText(text3);
     }
 
     private void incrementBeadCount() {
         beadData.incrementBeadCount();
     }
+
+
+    public void showSetMantraDialog() {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.setmantra, null);
+        dialogBuilder.setView(dialogView);
+
+        final EditText edt = (EditText) dialogView.findViewById(R.id.edit1);
+        final AlertDialog b = dialogBuilder.create();
+        //dialogBuilder.setTitle("Set Mantra");
+       // dialogBuilder.setMessage("Enter text below");
+        Button setButton = (Button)dialogView.findViewById(R.id.setButton);
+        setButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mantraText = edt.getText().toString();
+                refreshViewData();
+                b.dismiss();
+            }
+        });
+        Button cancelButton = (Button)dialogView.findViewById(R.id.cancelButton);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                b.dismiss();
+            }
+        });
+        /*dialogBuilder.setPositiveButton("Set", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                mantraText = edt.getText().toString();
+            }
+        });
+        dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                //pass
+            }
+        });*/
+
+        b.show();
+    }
+
 
     @Override
     public void onStart() {

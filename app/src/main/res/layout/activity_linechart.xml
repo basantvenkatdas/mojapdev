@@ -33,30 +33,29 @@
         android:layout_width="wrap_content"
         android:padding="2dp"
         android:layout_centerHorizontal="true"
-        android:background="@android:color/black"
         android:orientation="horizontal"
         android:layout_height="wrap_content">
 
         <Button
             android:id="@+id/dayButton"
             android:layout_width="wrap_content"
-            android:background="@drawable/button_selector"
+            android:background="@drawable/button_day_selector"
             android:text="Day"
             android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/weekButton"
             android:layout_width="wrap_content"
-            android:layout_marginLeft="2dp"
-            android:background="@drawable/button_selector"
+            android:layout_marginLeft="-2dp"
+            android:background="@drawable/button_week_selector"
             android:text="Week"
             android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/monthButton"
             android:layout_width="wrap_content"
-            android:background="@drawable/button_selector"
-            android:layout_marginLeft="2dp"
+            android:layout_marginLeft="-2dp"
+            android:background="@drawable/button_month_selector"
             android:text="Month"
             android:layout_height="wrap_content" />
 
@@ -75,6 +74,7 @@
             android:id="@+id/textmalacount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:textSize="20dp"
             android:textColor="@android:color/black"
             android:text="Highest" />
@@ -84,15 +84,17 @@
             android:layout_below="@id/textmalacount"
             android:id="@+id/malacountlayout"
             android:layout_width="wrap_content"
+            android:layout_centerHorizontal="true"
             android:layout_margin="10dp"
             android:padding="5dp"
-            android:background="@android:color/white"
+            android:background="@drawable/rectshape"
             android:layout_height="wrap_content">
 
 
             <TextView
                 android:id="@+id/highestmalacount"
                 android:layout_width="wrap_content"
+                android:layout_centerHorizontal="true"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/black"
                 android:text="10 Malas" />

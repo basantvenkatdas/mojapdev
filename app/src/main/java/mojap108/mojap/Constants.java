@@ -26,9 +26,9 @@ public interface Constants {
 
     public static final String InfoText = "<p>&nbsp;Chanting is said to be the simplest spiritual practice of all. It is also said to be the preferred practice of Kaliyug, the time we live in.</p>" +
             " \n" +
-            "<p>&nbsp;This method works whether you do it on a train, while waiting for a plane, in a coffee shop, or in any other situation. You don’t have to quit your job or go to a cave in the Himalayas. You can do it sitting in Times Square, if you will.</p>" +
+            "<p>&nbsp;This method works whether you do it on a train, while waiting for a plane, in a coffee shop, or in any other situation. You don&#8217;t have to quit your job or go to a cave in the Himalayas to practice it. You can do it sitting in the Times Square, if you will.</p>" +
             " \n" +
-            "<p>&nbsp;A great old saint by the name of Ramakrishna Paramhamsa described chanting similar to planting of a seed on the roof of a house. And when the conditions are right, the planted seed with the right amount of soil, sun and water would germinate into a small plant and later grow so big that it would down the whole house. He compared bringing down of the house with bringing down an illusory world that we build in our imagination.</p>" +
+            "<p>&nbsp;A great old saint by the name of Ramakrishna Paramhamsa described chanting similar to planting of a seed on the roof of a house. And when the conditions are right, the planted seed with the right amount of soil, sun and water would germinate into a small plant and later grow so big that it would bring down the whole house. He compared bringing down of the house with bringing down an illusory world that we build in our imagination.</p>" +
             " \n" +
             "<p>&nbsp;With each bead, you slowly clear the mirror of your heart till one day you are illumined fully.</p>";
 

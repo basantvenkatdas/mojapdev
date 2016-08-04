@@ -24,7 +24,7 @@ public class BeadData {
 
     private Context mContext;
 
-    private int BEAD_TO_MALA_RATIO = 64;
+    private int BEAD_TO_MALA_RATIO = 108;
 
     private String KEY_DAILYBEADCOUNT = "KEY_DAILYBEADCOUNT";
     private String KEY_GLOBALBEADCOUNT = "KEY_GLOBALBEADCOUNT";

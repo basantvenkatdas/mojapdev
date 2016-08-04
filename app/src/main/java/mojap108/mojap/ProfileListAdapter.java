@@ -65,9 +65,12 @@ public class ProfileListAdapter extends BaseAdapter {
             mHolder = (Holder)view.getTag();
         }
         mHolder.textView.setText(getItem(i).getText());
-       // if(mHolder.itemType == Constants.PROFILE_HEADER_ITEM) {
+        if(mHolder.itemType == Constants.PROFILE_HEADER_ITEM) {
+            mHolder.imageView.setVisibility(View.VISIBLE);
             mHolder.imageView.setImageResource(getItem(i).getImageResource());
-       // }
+        }else {
+            mHolder.imageView.setVisibility(View.INVISIBLE);
+        }
         return view;
     }
 
