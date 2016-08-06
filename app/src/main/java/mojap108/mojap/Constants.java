@@ -32,4 +32,5 @@ public interface Constants {
             " \n" +
             "<p>&nbsp;With each bead, you slowly clear the mirror of your heart till one day you are illumined fully.</p>";
 
+    public static final String TOKEN_TYPE = "type";
 }

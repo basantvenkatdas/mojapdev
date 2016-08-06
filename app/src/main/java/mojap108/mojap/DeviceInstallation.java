@@ -56,6 +56,7 @@ public class DeviceInstallation {
         final DigitsData mData = AppData.getInstance(mContext.getApplicationContext()).getDigitsData();
         try {
             loginPostBody.put(Constants.GCM_TOKEN, token);
+            loginPostBody.put(Constants.TOKEN_TYPE, "gcm");
         } catch (JSONException e) {
             e.printStackTrace();
         }

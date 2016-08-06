@@ -22,6 +22,7 @@
         android:layout_margin="30dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:textColor="@android:color/black"
         android:text="Session history"
         android:textSize="30dp"
         />
