@@ -40,7 +40,9 @@ import com.github.mikephil.charting.utils.ViewPortHandler;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -56,6 +58,8 @@ public class LineChartActivity extends Activity implements OnChartValueSelectedL
 
     private Typeface mTf;
     private long offsetHours;
+    private TextView highestMalaCount;
+    private TextView highestMalaCountDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +72,7 @@ public class LineChartActivity extends Activity implements OnChartValueSelectedL
      //   tvY = (TextView) findViewById(R.id.tvYMax);
 
         setUpButtonView();
+        setUpHighestCountViews();
         calculateTimeZonOffset();
         ImageView backButton = (ImageView) findViewById(R.id.headerbackbutton);
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -154,6 +159,11 @@ public class LineChartActivity extends Activity implements OnChartValueSelectedL
 
     }
 
+    private void setUpHighestCountViews() {
+        highestMalaCount = (TextView)findViewById(R.id.highestmalacount);
+        highestMalaCountDate = (TextView)findViewById(R.id.highestmalacountdate);
+    }
+
     private void calculateTimeZonOffset() {
         Calendar cal1 = Calendar.getInstance();
         TimeZone tz = cal1.getTimeZone();
@@ -236,7 +246,22 @@ public class LineChartActivity extends Activity implements OnChartValueSelectedL
         Log.d("ChartActivity","the parseactivitydata, timeperiod="+timePeriod);
         mXvaluesDay.clear();
         mBeadCountsDay.clear();
+        /*JSONObject ob = new JSONObject();
+        try {
+            ob.put("count", "10");
+            ob.put("date", "2016-08-05T15:00:00");
+            response.put("highest", ob);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }*/
+
         int max = 0;
+        JSONObject highestMalaData = response.optJSONObject("highest");
+        if(highestMalaData != null) {
+            int count = highestMalaData.optInt("count");
+            String date = highestMalaData.optString("date");
+            updateHighestMalaData(count, date);
+        }
         JSONArray dataArray = response.optJSONArray("value");
         try {
         for(int i =0;i< dataArray.length();i++) {
@@ -253,6 +278,22 @@ public class LineChartActivity extends Activity implements OnChartValueSelectedL
         updateChartWithData(mXvaluesDay, mBeadCountsDay, max);
         } catch (JSONException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void updateHighestMalaData(int count, String date) {
+        if(highestMalaCount != null) {
+            highestMalaCount.setText(String.valueOf(count)+" Malas");
+        }
+        SimpleDateFormat sp = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        String dateString = "2016-01-01";
+        try {
+            dateString =  sp.parse(date).toString();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if(highestMalaCountDate != null) {
+            highestMalaCountDate.setText(dateString);
         }
     }
 
