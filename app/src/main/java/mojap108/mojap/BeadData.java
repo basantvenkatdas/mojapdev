@@ -2,11 +2,14 @@ package mojap108.mojap;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by gollaba on 6/19/16.
@@ -33,6 +36,8 @@ public class BeadData {
 
     public static final String PREFS = "MoJap_preferences" ;
     SharedPreferences sharedPref;
+    private Timer timer;
+    private TimerTask timerTask;
 
     private BeadData(Context context, Date date) {
         mContext = context;
@@ -130,4 +135,48 @@ public class BeadData {
     public int getTodayMalaCount() {
         return (int)todayBeadCount/BEAD_TO_MALA_RATIO;
     }
+
+    public void startTime() {
+        Log.d("BeadData", "timer scheduled");
+        timer = new Timer();
+        timerTask = initTimeTask();
+        timer.schedule(timerTask, 60 * 1000, 60 * 1000);
+    }
+
+    private TimerTask initTimeTask() {
+        return new TimerTask() {
+            @Override
+            public void run() {
+                Log.d("BeadData", "timertask start run");
+                checkForDayChangeAndResetBeadCount();
+            }
+        };
+    }
+
+    public void stopTimer() {
+        if(timer != null) {
+            Log.d("BeadData", "timer cancelled");
+            timer.cancel();
+            timer = null;
+        }
+    }
+
+    private void checkForDayChangeAndResetBeadCount() {
+        Date savedDate = getSavedTodayDate();
+        Calendar cal1 = Calendar.getInstance();
+        cal1.setTime(new Date());
+        int day1 = cal1.get(Calendar.DAY_OF_YEAR);
+        int day2 = 0;
+        if(savedDate != null) {
+            cal1.setTime(savedDate);
+            day2 = cal1.get(Calendar.DAY_OF_YEAR);
+        }
+        Log.d("BeadData", "checking for day change");
+        if(todayDate != null && savedDate != null && todayDate.getTime() > savedDate.getTime() && day1 > day2) {
+            Log.d("BeadData", "day change detected resetting the bead count");
+            resetTodayBeadCount();
+        }
+        updateTodayDate();
+    }
+
 }

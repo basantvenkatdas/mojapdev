@@ -330,7 +330,7 @@ public class MoJapMainActivity extends Activity implements OnGestureListener {
 
     private void enableTouchFeeback() {
         Vibrator vb = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-      //  vb.vibrate(100);
+        //  vb.vibrate(100);
         RelativeLayout rl = (RelativeLayout)findViewById(R.id.mainlayout);
         rl.setHapticFeedbackEnabled(true);
         if(rl.isHapticFeedbackEnabled()) {
@@ -354,8 +354,8 @@ public class MoJapMainActivity extends Activity implements OnGestureListener {
         TextView mantraSet2 = (TextView) MoJapMainActivity.this.findViewById(R.id.mantraview1);
         mantraSet2.setText(mantraText);
         //TextView mainMalaCounter = (TextView) MoJapMainActivity.this.findViewById(R.id.todaymalacounter);
-       // String text3 = MoJapConstants.todayMalaCounterString.replace("COUNT", String.valueOf(beadData.getTodayMalaCount()));
-       // mainMalaCounter.setText(text3);
+        // String text3 = MoJapConstants.todayMalaCounterString.replace("COUNT", String.valueOf(beadData.getTodayMalaCount()));
+        // mainMalaCounter.setText(text3);
     }
 
     private void incrementBeadCount() {
@@ -372,7 +372,7 @@ public class MoJapMainActivity extends Activity implements OnGestureListener {
         final EditText edt = (EditText) dialogView.findViewById(R.id.edit1);
         final AlertDialog b = dialogBuilder.create();
         //dialogBuilder.setTitle("Set Mantra");
-       // dialogBuilder.setMessage("Enter text below");
+        // dialogBuilder.setMessage("Enter text below");
         Button setButton = (Button)dialogView.findViewById(R.id.setButton);
         setButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -407,11 +407,22 @@ public class MoJapMainActivity extends Activity implements OnGestureListener {
     @Override
     public void onStart() {
         super.onStart();
-        if(isLoginSuccessFull && !isUploadActivityStarted) {
-            if(mojapTimerActivity != null){
-                mojapTimerActivity.startActivityUpload();
-                isUploadActivityStarted = true;
+        try {
+            if(isLoginSuccessFull && !isUploadActivityStarted) {
+                if(mojapTimerActivity != null){
+                    mojapTimerActivity.startActivityUpload();
+                    isUploadActivityStarted = true;
+                }
             }
+        }catch (Exception e) {
+            Log.d("MojapMainActivity", "timertask for upload activity failed");
+        }
+        try {
+            if(beadData != null){
+                beadData.startTime();
+            }
+        }catch (Exception e) {
+            Log.d("MojapMainActivity", "timertask for daily beadcount reset failed");
         }
 
 
@@ -436,6 +447,9 @@ public class MoJapMainActivity extends Activity implements OnGestureListener {
         if(mojapTimerActivity != null) {
             isUploadActivityStarted = false;
             mojapTimerActivity.stopActivityUpload();
+        }
+        if(beadData != null) {
+            beadData.stopTimer();
         }
         super.onStop();
 
