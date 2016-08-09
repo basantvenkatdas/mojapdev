@@ -256,10 +256,10 @@ public class LineChartActivity extends Activity implements OnChartValueSelectedL
         }*/
 
         int max = 0;
-        JSONObject highestMalaData = response.optJSONObject("highest");
+        JSONObject highestMalaData = response.optJSONObject("highestActivity");
         if(highestMalaData != null) {
-            int count = highestMalaData.optInt("count");
-            String date = highestMalaData.optString("date");
+            int count = highestMalaData.optInt("beedCount");
+            String date = highestMalaData.optString("dateTime");
             updateHighestMalaData(count, date);
         }
         JSONArray dataArray = response.optJSONArray("value");
@@ -285,10 +285,12 @@ public class LineChartActivity extends Activity implements OnChartValueSelectedL
         if(highestMalaCount != null) {
             highestMalaCount.setText(String.valueOf(count)+" Malas");
         }
-        SimpleDateFormat sp = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        SimpleDateFormat sp = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         String dateString = "2016-01-01";
         try {
-            dateString =  sp.parse(date).toString();
+           // dateString =  sp.parse(date).toString();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+            dateString = sdf.format(sp.parse(date));
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -383,6 +385,7 @@ public class LineChartActivity extends Activity implements OnChartValueSelectedL
         set1.setValueTextSize(9f);
         set1.setDrawFilled(true);
         set1.setFillColor(Color.BLACK);
+        set1.setDrawCubic(true);
         ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
         dataSets.add(set1);
 

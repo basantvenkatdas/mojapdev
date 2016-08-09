@@ -61,7 +61,7 @@ public class MoJapDataUpload {
         try {
             createActivityRequestBody.put(Constants.AUTH_ID, mData.getAuthId());
             createActivityRequestBody.put(Constants.DATETIME, new Date().toString());
-            createActivityRequestBody.put(Constants.BEEDCOUNT, BeadData.getInstance(mContext, new Date()).getTodayBeadCount());
+            createActivityRequestBody.put(Constants.BEADCOUNTFORDAY, BeadData.getInstance(mContext, new Date()).getTodayBeadCount());
         } catch (JSONException e) {
             e.printStackTrace();
         }

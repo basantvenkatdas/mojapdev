@@ -14,6 +14,7 @@ public interface Constants {
     public static final String USER_ID = "userId";
     public static final String DATETIME = "dateTime";
     public static final String BEEDCOUNT = "beedCount";
+    public static final String BEADCOUNTFORDAY = "beedCountForDay";
     public static final String GCM_TOKEN = "token";
     public static final int LOGIN_RESPONSE = 1;
     public static final int INSTALLATION_RESPONSE = 1;
