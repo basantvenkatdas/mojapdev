@@ -21,6 +21,7 @@ public interface Constants {
     public static final int PROFILE_HEADER_ITEM = 1;
     public static final int PROFILE_ROW_ITEM = 2;
     public static final String GCM_SENDERID = "585318721245";
+    public static final  int BEAD_TO_MALA_RATIO = 108;
 
 
     public static final String htmlText = "<html><body style=\"text-align:justify\"> %s </body></Html>";
@@ -34,4 +35,7 @@ public interface Constants {
             "<p>&nbsp;With each bead, you slowly clear the mirror of your heart till one day you are illumined fully.</p>";
 
     public static final String TOKEN_TYPE = "type";
+    public static final String FEEDBACK = "feedback";
+    public static final String POST_FEEDBACK = "/api/feedback";
+
 }

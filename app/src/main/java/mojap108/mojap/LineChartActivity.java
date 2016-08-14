@@ -60,6 +60,7 @@ public class LineChartActivity extends Activity implements OnChartValueSelectedL
     private long offsetHours;
     private TextView highestMalaCount;
     private TextView highestMalaCountDate;
+    private String timeZoneName = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -168,6 +169,7 @@ public class LineChartActivity extends Activity implements OnChartValueSelectedL
         Calendar cal1 = Calendar.getInstance();
         TimeZone tz = cal1.getTimeZone();
         long msFromEpochGmt = cal1.getTimeInMillis();
+        timeZoneName = tz.getID();
         offsetHours = tz.getOffset(msFromEpochGmt);
 
       /*  Calendar mCalendar = new GregorianCalendar();
@@ -220,7 +222,7 @@ public class LineChartActivity extends Activity implements OnChartValueSelectedL
 
     private void requestData(final String timePeriod) {
         final DigitsData mData = AppData.getInstance(getApplicationContext()).getDigitsData();
-        String url = Constants.BASE_URL + Constants.GET_ACTIVITY+"/"+mData.getAuthId()+"/"+timePeriod+"?offset="+(offsetHours/(3600*1000));
+        String url = Constants.BASE_URL + Constants.GET_ACTIVITY+"/"+mData.getAuthId()+"/"+timePeriod+"?offset="+timeZoneName;//(offsetHours/(3600*1000));
         RequestQueue mQueue = Volley.newRequestQueue(getApplicationContext());
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -283,7 +285,7 @@ public class LineChartActivity extends Activity implements OnChartValueSelectedL
 
     private void updateHighestMalaData(int count, String date) {
         if(highestMalaCount != null) {
-            highestMalaCount.setText(String.valueOf(count)+" Malas");
+            highestMalaCount.setText(String.valueOf((int)count/Constants.BEAD_TO_MALA_RATIO)+" Malas");
         }
         SimpleDateFormat sp = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         String dateString = "2016-01-01";

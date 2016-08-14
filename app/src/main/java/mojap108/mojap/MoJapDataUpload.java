@@ -29,6 +29,7 @@ public class MoJapDataUpload {
     private Timer timer;
     private TimerTask timerTask = null;
     private long offsetHours;
+    private String timeZoneName = null;
 
     private TimerTask initTimeTask() {
         return new TimerTask() {
@@ -43,6 +44,7 @@ public class MoJapDataUpload {
     private void calculateTimeZonOffset() {
         Calendar cal1 = Calendar.getInstance();
         TimeZone tz = cal1.getTimeZone();
+        timeZoneName = tz.getID();
         long msFromEpochGmt = cal1.getTimeInMillis();
         offsetHours = tz.getOffset(msFromEpochGmt)/(3600 * 1000);
 
@@ -54,7 +56,7 @@ public class MoJapDataUpload {
 
     private void uploadCurrentBeadCount() {
 
-        String url = Constants.BASE_URL + Constants.CREATE_ACTIVITY+"?offset="+offsetHours;
+        String url = Constants.BASE_URL + Constants.CREATE_ACTIVITY+"?offset="+timeZoneName;//offsetHours;
         RequestQueue mQueue = Volley.newRequestQueue(mContext.getApplicationContext());
         JSONObject createActivityRequestBody = new JSONObject();
         final DigitsData mData = AppData.getInstance(mContext.getApplicationContext()).getDigitsData();

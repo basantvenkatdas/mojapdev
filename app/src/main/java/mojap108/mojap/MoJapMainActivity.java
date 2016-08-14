@@ -181,6 +181,9 @@ public class MoJapMainActivity extends Activity implements OnGestureListener {
                 }else if(i == 2) {
                     mDrawerLayout.closeDrawer(mDrawerList);
                     showSetMantraDialog();
+                }else if(i == 3) {
+                    mDrawerLayout.closeDrawer(mDrawerList);
+                    showFeedBackDialog();
                 }
             }
         });
@@ -194,11 +197,69 @@ public class MoJapMainActivity extends Activity implements OnGestureListener {
 
     }
 
+    private void showFeedBackDialog() {
+        final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.feedback, null);
+        dialogBuilder.setView(dialogView);
+
+        final EditText edt = (EditText) dialogView.findViewById(R.id.edit1);
+        final AlertDialog b = dialogBuilder.create();
+        //dialogBuilder.setTitle("Set Mantra");
+        // dialogBuilder.setMessage("Enter text below");
+        final TextView thankYouText = (TextView)dialogView.findViewById(R.id.thankyoutext);
+
+        final Button dismissButton = (Button)dialogView.findViewById(R.id.dismissButton);
+        dismissButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                b.dismiss();
+            }
+        });
+
+        Button setButton = (Button)dialogView.findViewById(R.id.setButton);
+        setButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mantraText = edt.getText().toString();
+                refreshViewData();
+                dialogView.findViewById(R.id.dialogbuttonlayout).setVisibility(View.GONE);
+                //dialogView.setVisibility(View.GONE);
+                edt.setVisibility(View.GONE);
+                new FeedbackRequest(MoJapMainActivity.this, mHandler).sendFeedback(edt.getText().toString());
+                thankYouText.setVisibility(View.VISIBLE);
+                dismissButton.setVisibility(View.VISIBLE);
+
+            }
+        });
+        Button cancelButton = (Button)dialogView.findViewById(R.id.cancelButton);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                b.dismiss();
+            }
+        });
+        /*dialogBuilder.setPositiveButton("Set", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                mantraText = edt.getText().toString();
+            }
+        });
+        dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                //pass
+            }
+        });*/
+
+        b.show();
+
+    }
+
     private ArrayList<ProfileDrawerListItem> getProfileDrawerItems() {
         ArrayList<ProfileDrawerListItem> items = new ArrayList<ProfileDrawerListItem>();
         items.add(new ProfileDrawerListItem(AppData.getInstance(this).getUserData().getPhoneNo(), R.drawable.profile_icon, Constants.PROFILE_HEADER_ITEM));
         items.add(new ProfileDrawerListItem("Reset Bead Count", R.drawable.reset_icon, Constants.PROFILE_ROW_ITEM));
         items.add(new ProfileDrawerListItem("Set Mantra", R.drawable.reset_icon, Constants.PROFILE_ROW_ITEM));
+        items.add(new ProfileDrawerListItem("App Feedback", R.drawable.reset_icon, Constants.PROFILE_ROW_ITEM));
         return items;
     }
 
@@ -288,6 +349,7 @@ public class MoJapMainActivity extends Activity implements OnGestureListener {
             incrementBeadCount();
             refreshViewData();
             enableTouchFeeback();
+            longVibrateOnMalaComplete();
             rotateBead();
             /*view.animate()
                     .translationXBy(-1000)
@@ -302,6 +364,11 @@ public class MoJapMainActivity extends Activity implements OnGestureListener {
             return true;
         }
         return false;
+    }
+
+    private void longVibrateOnMalaComplete() {
+        Vibrator vb = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        vb.vibrate(100);
     }
 
     private void rotateBead() {

@@ -111,9 +111,19 @@ public class BeadData {
 
     public void incrementBeadCount() {
         todayBeadCount++;
-        displayTodayBeadCount++;
+        incrementDisplayTodayBeadCount();
         globalBeadCount++;
+        Log.d("BeadData","todayBeadCount="+todayBeadCount);
+        Log.d("BeadData","displayTodayBeadCount="+displayTodayBeadCount);
+        Log.d("BeadData","globalBeadCount="+globalBeadCount);
         saveUpdatedBeadData();
+    }
+
+    private void incrementDisplayTodayBeadCount() {
+        displayTodayBeadCount++;
+        if(displayTodayBeadCount == Constants.BEAD_TO_MALA_RATIO){
+            displayTodayBeadCount = 0;
+        }
     }
 
     public int getTodayBeadCount() {
