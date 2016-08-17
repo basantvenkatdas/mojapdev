@@ -9,6 +9,8 @@ public interface Constants {
     public static final String INSTALLATION_API = "/api/authId/install";
     public static final String CREATE_ACTIVITY = "/api/activity";
     public static final String GET_ACTIVITY = "/api/activity";
+    public static final String POST_RESET = "/api/activity/reset";
+
     public static final String PHONE_NO = "phoneNo";
     public static final String AUTH_ID = "authId";
     public static final String USER_ID = "userId";

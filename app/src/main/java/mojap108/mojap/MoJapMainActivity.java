@@ -97,9 +97,11 @@ public class MoJapMainActivity extends Activity implements OnGestureListener {
         isLoginSuccessFull = true;
         doDeviceInstallation();
         AppData.getInstance(this).storeUserData(mData.getId());
+        beadData.setTotalBeadCount(mData.getTotalBeads());
         mojapTimerActivity = new MoJapDataUpload(this);
         mojapTimerActivity.startActivityUpload();
         isUploadActivityStarted = true;
+        refreshViewData();
     }
 
     private void doDeviceInstallation() {
@@ -176,6 +178,7 @@ public class MoJapMainActivity extends Activity implements OnGestureListener {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if(i == 1) {
                     beadData.resetTodayBeadCount();
+                    new ResetRequest(MoJapMainActivity.this, mHandler).sendResetRequest();
                     refreshViewData();
                     mDrawerLayout.closeDrawer(mDrawerList);
                 }else if(i == 2) {
@@ -346,10 +349,10 @@ public class MoJapMainActivity extends Activity implements OnGestureListener {
                 && Math.abs(v) > SWIPE_THRESHOLD_VELOCITY) {
             Log.d("MoJapActivity", "the onfing method swipe from left to right");
             final View view = MoJapMainActivity.this.findViewById(R.id.malaCount);
+            longVibrateOnMalaComplete();
+
             incrementBeadCount();
             refreshViewData();
-            enableTouchFeeback();
-            longVibrateOnMalaComplete();
             rotateBead();
             /*view.animate()
                     .translationXBy(-1000)
@@ -367,8 +370,12 @@ public class MoJapMainActivity extends Activity implements OnGestureListener {
     }
 
     private void longVibrateOnMalaComplete() {
-        Vibrator vb = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        vb.vibrate(100);
+        if((beadData.getTodayDisplayBeadCount()+1)%Constants.BEAD_TO_MALA_RATIO == 0) {
+            Vibrator vb = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+            vb.vibrate(100);
+        }else {
+            enableTouchFeeback();
+        }
     }
 
     private void rotateBead() {

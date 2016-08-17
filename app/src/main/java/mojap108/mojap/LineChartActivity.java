@@ -1,9 +1,11 @@
 package mojap108.mojap;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.HandlerThread;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
@@ -48,6 +50,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
+import android.os.Handler;
 
 public class LineChartActivity extends Activity implements OnChartValueSelectedListener {
 
@@ -61,6 +64,7 @@ public class LineChartActivity extends Activity implements OnChartValueSelectedL
     private TextView highestMalaCount;
     private TextView highestMalaCountDate;
     private String timeZoneName = null;
+    private ProgressDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,10 +159,26 @@ public class LineChartActivity extends Activity implements OnChartValueSelectedL
         // l.setCustom(ColorTemplate.VORDIPLOM_COLORS, new String[] { "abc",
         // "def", "ghj", "ikl", "mno" });
 
-        requestData("day");
+        Handler handler = new Handler();
+        startProgressDialog();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                progress.dismiss();
+                requestData("day");
+            }
+        }, 2000);
+
        // setData(7, 50);
 
     }
+
+    private void startProgressDialog() {
+        progress = new ProgressDialog(this);
+        progress.setMessage("Loading...");
+        progress.show();
+    }
+
 
     private void setUpHighestCountViews() {
         highestMalaCount = (TextView)findViewById(R.id.highestmalacount);

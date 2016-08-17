@@ -67,7 +67,8 @@ public class MoJapDataUpload {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
+        Log.d("MojapDataUpload", "upload data url="+url);
+        Log.d("MojapDataUpload", "upload data="+createActivityRequestBody.toString());
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
                 (Request.Method.POST, url, createActivityRequestBody, new Response.Listener<JSONObject>() {
 

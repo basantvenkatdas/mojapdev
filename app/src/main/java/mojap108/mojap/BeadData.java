@@ -64,17 +64,23 @@ public class BeadData {
     }
 
     public void resetTodayBeadCount() {
+        globalBeadCount = globalBeadCount - todayBeadCount;
         todayBeadCount = 0;
         displayTodayBeadCount = 0;
         saveUpdatedBeadData();
     }
 
 
+    public void setTotalBeadCount(int totalCount){
+        globalBeadCount = totalCount;
+    }
+
 
     private void getSavedBeadData() {
         todayBeadCount = sharedPref.getInt(KEY_DAILYBEADCOUNT,0);
         globalBeadCount= sharedPref.getInt(KEY_GLOBALBEADCOUNT,0);
         displayTodayBeadCount = sharedPref.getInt(KEY_DAILYBEADCOUNT,0);
+        displayTodayBeadCount = displayTodayBeadCount%Constants.BEAD_TO_MALA_RATIO;
     }
 
     private Date getSavedTodayDate() {
