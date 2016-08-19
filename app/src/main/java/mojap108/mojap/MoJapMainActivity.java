@@ -7,6 +7,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -73,6 +74,9 @@ public class MoJapMainActivity extends Activity implements OnGestureListener {
         {
             switch (msg.what) {
                 case Constants.LOGIN_RESPONSE:
+                    if(progress != null) {
+                        progress.dismiss();
+                    }
                     if(msg.obj != null && msg.obj instanceof LoginData) {
                         storeUserData((LoginData)msg.obj);
                     }else {
@@ -92,8 +96,10 @@ public class MoJapMainActivity extends Activity implements OnGestureListener {
     private boolean isLoginSuccessFull = false;
     private boolean isUploadActivityStarted;
     private String mantraText = "Om Namah Shivay";
+    private ProgressDialog progress;
 
     public void storeUserData(LoginData mData) {
+        Log.d("MojapMainActivity", "storeUserData, totalBeads ="+mData.getTotalBeads());
         isLoginSuccessFull = true;
         doDeviceInstallation();
         AppData.getInstance(this).storeUserData(mData.getId());
@@ -224,8 +230,6 @@ public class MoJapMainActivity extends Activity implements OnGestureListener {
         setButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mantraText = edt.getText().toString();
-                refreshViewData();
                 dialogView.findViewById(R.id.dialogbuttonlayout).setVisibility(View.GONE);
                 //dialogView.setVisibility(View.GONE);
                 edt.setVisibility(View.GONE);
@@ -301,6 +305,13 @@ public class MoJapMainActivity extends Activity implements OnGestureListener {
 
     public void doLogin() {
         new Login(this, mHandler).doLogin();
+        startProgressDialog();
+    }
+
+    private void startProgressDialog() {
+        progress = new ProgressDialog(this);
+        progress.setMessage("Syncing Your Data...");
+        progress.show();
     }
 
 

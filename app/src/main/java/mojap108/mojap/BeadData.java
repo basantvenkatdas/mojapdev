@@ -127,8 +127,8 @@ public class BeadData {
 
     private void incrementDisplayTodayBeadCount() {
         displayTodayBeadCount++;
-        if(displayTodayBeadCount == Constants.BEAD_TO_MALA_RATIO){
-            displayTodayBeadCount = 0;
+        if(displayTodayBeadCount > Constants.BEAD_TO_MALA_RATIO && displayTodayBeadCount-1 == Constants.BEAD_TO_MALA_RATIO){
+            displayTodayBeadCount = 1;
         }
     }
 
