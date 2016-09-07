@@ -55,5 +55,13 @@ public class AppData {
         return gData;
     }
 
+    public void setCoachMarkSeen() {
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean(Constants.COACHMARK_SHOWN, true);
+        editor.commit();
+    }
 
+    public boolean isCoachMarkSeen() {
+        return sharedPref.getBoolean(Constants.COACHMARK_SHOWN, false);
+    }
 }

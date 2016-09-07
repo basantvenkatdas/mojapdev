@@ -40,4 +40,5 @@ public interface Constants {
     public static final String FEEDBACK = "feedback";
     public static final String POST_FEEDBACK = "/api/feedback";
 
+    public final String COACHMARK_SHOWN = "COACHMARK_SHOWN";
 }

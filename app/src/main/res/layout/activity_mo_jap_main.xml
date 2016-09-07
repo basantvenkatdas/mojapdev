@@ -197,6 +197,39 @@
 
     </RelativeLayout>
 
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/coachmark_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#cc000000">
+
+     <ImageView
+         android:id="@+id/coachmark_image"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:src="@drawable/coachmark_swiperight"
+         android:layout_centerHorizontal="true"
+         android:layout_alignParentBottom="true"
+         android:layout_marginBottom="40dp"
+         />
+
+        <TextView
+            android:textColor="@android:color/white"
+            android:layout_centerHorizontal="true"
+            android:textSize="24dp"
+            android:layout_alignParentBottom="true"
+            android:paddingRight="50dp"
+            android:paddingLeft="50dp"
+            android:gravity="center_horizontal"
+            android:text="Swipe right here for counting the beads"
+            android:layout_width="wrap_content"
+            android:layout_marginBottom="80dp"
+            android:layout_height="wrap_content" />
+
     </RelativeLayout>
 
     <FrameLayout

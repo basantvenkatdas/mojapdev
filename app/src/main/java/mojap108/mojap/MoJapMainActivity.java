@@ -160,6 +160,19 @@ public class MoJapMainActivity extends Activity implements OnGestureListener {
                 launchInfoDialog();
             }
         });
+        RelativeLayout coachMarkLayout = (RelativeLayout)findViewById(R.id.coachmark_layout);
+        if(AppData.getInstance(this).isCoachMarkSeen()) {
+            coachMarkLayout.setVisibility(View.GONE);
+        }else {
+            coachMarkLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    view.setVisibility(View.GONE);
+                    AppData.getInstance(MoJapMainActivity.this).setCoachMarkSeen();
+                }
+            });
+        }
+
         /*Button resetButton = (Button)findViewById(R.id.resetbutton);
         resetButton.setOnClickListener(new View.OnClickListener() {
             @Override
