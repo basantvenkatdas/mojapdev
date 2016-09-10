@@ -98,7 +98,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/black"
-                android:text="10 Malas" />
+                android:text="           -           " />
 
             <TextView
                 android:layout_below="@id/highestmalacount"
@@ -107,7 +107,7 @@
                 android:textColor="@android:color/black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="07/09/2016" />
+                android:text="           -            " />
 
         </RelativeLayout>
 

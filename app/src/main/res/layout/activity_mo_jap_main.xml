@@ -83,7 +83,7 @@
             android:layout_margin="10dp"
             android:textColor="@android:color/black"
             android:textSize="24dp"
-            android:text="@string/mantra"
+            android:text="ॐ नम: शिवाय्"
             android:layout_above="@id/beadimageview"
             />
 
@@ -96,7 +96,7 @@
             android:layout_margin="10dp"
             android:textColor="@android:color/black"
             android:textSize="24dp"
-            android:text="@string/mantra"
+            android:text="ॐ नम: शिवाय्"
             android:layout_above="@id/beadimageview"
             />
 

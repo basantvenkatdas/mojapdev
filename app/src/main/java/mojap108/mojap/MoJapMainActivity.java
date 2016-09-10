@@ -41,9 +41,12 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -80,7 +83,7 @@ public class MoJapMainActivity extends Activity implements OnGestureListener {
                     if(msg.obj != null && msg.obj instanceof LoginData) {
                         storeUserData((LoginData)msg.obj);
                     }else {
-                        showErrorMessageQuit("User Authentication failed");
+                        showErrorDialog("Sync failed!");
                     }
                     break;
                 default:
@@ -95,7 +98,7 @@ public class MoJapMainActivity extends Activity implements OnGestureListener {
     private String[] mPlanetTitles = {"basant", "gollapudi"};
     private boolean isLoginSuccessFull = false;
     private boolean isUploadActivityStarted;
-    private String mantraText = "Om Namah Shivay";
+    private String mantraText = "ॐ नम: शिवाय्";
     private ProgressDialog progress;
 
     public void storeUserData(LoginData mData) {
@@ -500,6 +503,47 @@ public class MoJapMainActivity extends Activity implements OnGestureListener {
 
         b.show();
     }
+
+    public void showErrorDialog(String errorString) {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.loginerror, null);
+        dialogBuilder.setView(dialogView);
+        final AlertDialog b = dialogBuilder.create();
+
+        TextView errorTextView = (TextView)dialogView.findViewById(R.id.loginerrortextview);
+        errorTextView.setText(errorString);
+
+        Button continueOfflineButton = (Button)dialogView.findViewById(R.id.continueofflinebutton);
+        continueOfflineButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                b.dismiss();
+            }
+        });
+        Button cancelButton = (Button)dialogView.findViewById(R.id.exit_app_button);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                b.dismiss();
+                MoJapMainActivity.this.finish();
+            }
+        });
+        /*dialogBuilder.setPositiveButton("Set", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                mantraText = edt.getText().toString();
+            }
+        });
+        dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                //pass
+            }
+        });*/
+
+        b.show();
+    }
+
+
 
 
     @Override

@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Intent;
 import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
 import com.digits.sdk.android.AuthCallback;
 import com.digits.sdk.android.Digits;
 import com.digits.sdk.android.DigitsException;
@@ -18,14 +19,21 @@ import io.fabric.sdk.android.Fabric;
  */
 public class MoJapApplication extends Application {
 
+    // Note: Your consumer key and secret should be obfuscated in your source code before shipping.
+    private static final String TWITTER_KEY = "QnBq4uNRlg7LKgyBlKdf79kWn";
+    private static final String TWITTER_SECRET = "wKrzY4R1bnGGMvIrBQU5rPE4UCzLBNp4JdEcp3VECEJ4VeB4Bf";
+
+
     private AuthCallback authCallback;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        TwitterAuthConfig authConfig = new TwitterAuthConfig("0gk1wyzAzodXXlWYC6WJIohm8", "eQ4evP2qItlVSCIL6LGVvhcNvzOygJaOSNshJSdHbYlrDFv10x");
-        Fabric.with(this, new TwitterCore(authConfig), new Digits());
-       // Digits.getSessionManager().clearActiveSession();
+        TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
+        Digits.Builder digitsBuilder = new Digits.Builder().withTheme(R.style.CustomDigitsTheme);
+        Fabric.with(this, new TwitterCore(authConfig), digitsBuilder.build());
+        Fabric.with(this, new Crashlytics());
+        // Digits.getSessionManager().clearActiveSession();
         authCallback = new AuthCallback() {
             @Override
             public void success(DigitsSession session, String phoneNumber) {

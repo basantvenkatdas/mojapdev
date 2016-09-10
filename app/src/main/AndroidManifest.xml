@@ -24,7 +24,7 @@
 
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="95a32b0ca0685edc85a819e40101a4effda6934f" />
+            android:value="e3e4a486adaf774975e48102fba53327ea39272f" />
 
         <activity
             android:name=".MoJapMainActivity"
@@ -57,4 +57,5 @@
         <activity android:name=".MojapInfo" android:screenOrientation="portrait"></activity>
     </application>
 
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>

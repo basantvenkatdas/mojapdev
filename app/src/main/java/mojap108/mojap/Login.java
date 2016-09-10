@@ -71,6 +71,7 @@ public class Login {
         ObjectMapper mapper = new ObjectMapper();
         LoginData mData = null;
         try {
+            Log.d("Login", "the login response="+response.toString());
             mData = mapper.readValue(response.toString(), LoginData.class);
         } catch (IOException e) {
             e.printStackTrace();
