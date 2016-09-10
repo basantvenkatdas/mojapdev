@@ -64,4 +64,14 @@ public class AppData {
     public boolean isCoachMarkSeen() {
         return sharedPref.getBoolean(Constants.COACHMARK_SHOWN, false);
     }
+
+    public void setMantraText(String val) {
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(Constants.MANTRA_SET, val);
+        editor.commit();
+    }
+
+    public String getMantraText() {
+        return sharedPref.getString(Constants.MANTRA_SET, Constants.DEFAULT_MANTRA_TEXT);
+    }
 }

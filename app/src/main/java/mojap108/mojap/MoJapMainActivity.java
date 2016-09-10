@@ -451,9 +451,9 @@ public class MoJapMainActivity extends Activity implements OnGestureListener {
         TextView mainCounter = (TextView) MoJapMainActivity.this.findViewById(R.id.malaCounttextview);
         mainCounter.setText(String.valueOf(beadData.getTodayDisplayBeadCount()));
         TextView mantraSet1 = (TextView) MoJapMainActivity.this.findViewById(R.id.mantraview);
-        mantraSet1.setText(mantraText);
+        mantraSet1.setText(AppData.getInstance(this).getMantraText());
         TextView mantraSet2 = (TextView) MoJapMainActivity.this.findViewById(R.id.mantraview1);
-        mantraSet2.setText(mantraText);
+        mantraSet2.setText(AppData.getInstance(this).getMantraText());
         //TextView mainMalaCounter = (TextView) MoJapMainActivity.this.findViewById(R.id.todaymalacounter);
         // String text3 = MoJapConstants.todayMalaCounterString.replace("COUNT", String.valueOf(beadData.getTodayMalaCount()));
         // mainMalaCounter.setText(text3);
@@ -478,7 +478,8 @@ public class MoJapMainActivity extends Activity implements OnGestureListener {
         setButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mantraText = edt.getText().toString();
+                String mantraText = edt.getText().toString();
+                AppData.getInstance(MoJapMainActivity.this).setMantraText(mantraText);
                 refreshViewData();
                 b.dismiss();
             }
