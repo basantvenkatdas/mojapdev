@@ -104,6 +104,7 @@ public class MoJapDataUpload {
         cal1.setTime(todayDate);
         int min = cal1.get(Calendar.MINUTE);
         timerTask = initTimeTask();
+        Log.d("Mojapdataupload", "next update scheduled in "+((60-min) * 60)+" seconds" );
         timer.schedule(timerTask, (60-min) * 60 * 1000, UPLOAD_INTERVAL);
     }
 

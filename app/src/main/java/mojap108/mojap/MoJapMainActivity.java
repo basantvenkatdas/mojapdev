@@ -98,7 +98,7 @@ public class MoJapMainActivity extends Activity implements OnGestureListener {
     private String[] mPlanetTitles = {"basant", "gollapudi"};
     private boolean isLoginSuccessFull = false;
     private boolean isUploadActivityStarted;
-    private String mantraText = "ॐ नम: शिवाय्";
+    private String mantraText = "ॐ नमः शिवाय";
     private ProgressDialog progress;
 
     public void storeUserData(LoginData mData) {
@@ -107,6 +107,7 @@ public class MoJapMainActivity extends Activity implements OnGestureListener {
         doDeviceInstallation();
         AppData.getInstance(this).storeUserData(mData.getId());
         beadData.setTotalBeadCount(mData.getTotalBeads());
+        beadData.setTodayBeadCount(mData.getBeadCountForTheDay());
         mojapTimerActivity = new MoJapDataUpload(this);
         mojapTimerActivity.startActivityUpload();
         isUploadActivityStarted = true;

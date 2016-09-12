@@ -23,7 +23,7 @@ import java.io.IOException;
  */
 public class FeedbackRequest {
 
-    String url = Constants.BASE_URL + Constants.INSTALLATION_API;
+    String url = Constants.BASE_URL + Constants.POST_FEEDBACK;
     private Context mContext = null;
     private Handler mhandler = null;
 
@@ -35,11 +35,13 @@ public class FeedbackRequest {
 
     public void sendFeedback(String feedbackString) {
         final DigitsData mData = AppData.getInstance(mContext.getApplicationContext()).getDigitsData();
-        String url = Constants.BASE_URL + Constants.POST_FEEDBACK+"/"+mData.getAuthId();
+        String url = Constants.BASE_URL + Constants.POST_FEEDBACK;
         RequestQueue mQueue = Volley.newRequestQueue(mContext.getApplicationContext());
         JSONObject feedbackPostBody = new JSONObject();
         try {
             feedbackPostBody.put(Constants.FEEDBACK, feedbackString);
+            feedbackPostBody.put(Constants.FEEDBACK_REPORTER, mData.getAuthId());
+
         } catch (JSONException e) {
             e.printStackTrace();
         }

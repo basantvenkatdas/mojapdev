@@ -18,6 +18,8 @@ import android.os.Message;
 import android.util.Log;
 
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.TimeZone;
 
 /**
  * Created by gollaba on 7/14/16.
@@ -27,16 +29,31 @@ public class Login {
     String url = Constants.BASE_URL + Constants.LOGIN_API;
     private Context mContext = null;
     private Handler mhandler = null;
+    private String timeZoneName;
+    private int offsetHours;
 
     public Login(Context context, Handler mHandler) {
         mContext = context;
         this.mhandler = mHandler;
     }
 
+    private void calculateTimeZonOffset() {
+        Calendar cal1 = Calendar.getInstance();
+        TimeZone tz = cal1.getTimeZone();
+        timeZoneName = tz.getID();
+        long msFromEpochGmt = cal1.getTimeInMillis();
+        offsetHours = tz.getOffset(msFromEpochGmt)/(3600 * 1000);
+
+      /*  Calendar mCalendar = new GregorianCalendar();
+        TimeZone mTimeZone = mCalendar.getTimeZone();
+        int mGMTOffset = mTimeZone.getRawOffset();
+        offsetHours =  TimeUnit.HOURS.convert(mGMTOffset, TimeUnit.MILLISECONDS);*/
+    }
+
     public void doLogin() {
 
         RequestQueue mQueue = Volley.newRequestQueue(mContext.getApplicationContext());
-
+        url = url + "?offset="+timeZoneName;
 
         JSONObject loginPostBody = new JSONObject();
         final DigitsData mData = AppData.getInstance(mContext.getApplicationContext()).getDigitsData();

@@ -47,7 +47,7 @@ public class DeviceInstallation {
             return ;
         }
 
-        url = url.replace("authId", AppData.getInstance(mContext).getUserData().getAuthId());
+       // url = url.replace("authId", AppData.getInstance(mContext).getUserData().getAuthId());
 
         RequestQueue mQueue = Volley.newRequestQueue(mContext.getApplicationContext());
 
@@ -57,6 +57,7 @@ public class DeviceInstallation {
         try {
             loginPostBody.put(Constants.GCM_TOKEN, token);
             loginPostBody.put(Constants.TOKEN_TYPE, "gcm");
+            loginPostBody.put(Constants.AUTH_ID, mData.getAuthId());
         } catch (JSONException e) {
             e.printStackTrace();
         }

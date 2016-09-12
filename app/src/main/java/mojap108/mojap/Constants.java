@@ -6,7 +6,7 @@ package mojap108.mojap;
 public interface Constants {
     public static final String BASE_URL = "https://mojapdev.herokuapp.com";
     public static final String LOGIN_API = "/api/login";
-    public static final String INSTALLATION_API = "/api/authId/install";
+    public static final String INSTALLATION_API = "/api/install";
     public static final String CREATE_ACTIVITY = "/api/activity";
     public static final String GET_ACTIVITY = "/api/activity";
     public static final String POST_RESET = "/api/activity/reset";
@@ -37,10 +37,11 @@ public interface Constants {
             "<p>&nbsp;With each bead, you slowly clear the mirror of your heart till one day you are illumined fully.</p>";
 
     public static final String TOKEN_TYPE = "type";
-    public static final String FEEDBACK = "feedback";
-    public static final String POST_FEEDBACK = "/api/feedback";
+    public static final String FEEDBACK = "reportDetails";
+    public static final String POST_FEEDBACK = "/api/report/create";
 
     public final String COACHMARK_SHOWN = "COACHMARK_SHOWN";
     public static final String MANTRA_SET = "MANTRA_SET" ;
-    public static final String DEFAULT_MANTRA_TEXT = "ॐ नम: शिवाय्";
+    public static final String DEFAULT_MANTRA_TEXT = "ॐ नमः शिवाय";
+    public static final String FEEDBACK_REPORTER = "reporter";
 }

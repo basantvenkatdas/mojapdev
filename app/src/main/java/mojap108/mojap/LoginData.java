@@ -16,7 +16,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "authId",
     "phoneNo",
     "_id",
-    "totalBeeds"
+    "totalBeeds",
+        "beedCountForDay"
 })
 public class LoginData {
 
@@ -30,9 +31,10 @@ public class LoginData {
     private String id;
     @JsonProperty("totalBeeds")
     private int totalBeeds;
+    @JsonProperty("beedCountForDay")
+    private int beedCountForDay;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
-
 
 
     /**
@@ -94,6 +96,29 @@ public class LoginData {
     public void setPhoneNo(String phoneNo) {
         this.phoneNo = phoneNo;
     }
+
+
+    /**
+     *
+     * @return
+     *     The Total beedCountForDay
+     */
+    @JsonProperty("beedCountForDay")
+    public int getBeadCountForTheDay() {
+        return beedCountForDay;
+    }
+
+    /**
+     *
+     * @param beads
+     *     The beedCountForDay
+     */
+    @JsonProperty("beedCountForDay")
+    public void setBeadCountForTheDay(int beads) {
+        this.beedCountForDay = beads;
+    }
+
+
 
     /**
      *
