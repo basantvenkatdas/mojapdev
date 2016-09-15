@@ -35,6 +35,7 @@ public class Login {
     public Login(Context context, Handler mHandler) {
         mContext = context;
         this.mhandler = mHandler;
+        calculateTimeZonOffset();
     }
 
     private void calculateTimeZonOffset() {

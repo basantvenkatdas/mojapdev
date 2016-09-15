@@ -78,6 +78,7 @@ public class BeadData {
     public void setTodayBeadCount(int beadCount) {
         todayBeadCount = beadCount;
         displayTodayBeadCount = beadCount;
+        displayTodayBeadCount = displayTodayBeadCount % Constants.BEAD_TO_MALA_RATIO;
     }
 
 

@@ -28,7 +28,7 @@ android {
         applicationId "mojap108.mojap"
         minSdkVersion 21
         targetSdkVersion 23
-        versionCode 2
+        versionCode 3
         versionName '1.0.1'
     }
     buildTypes {
