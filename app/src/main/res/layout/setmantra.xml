@@ -16,11 +16,21 @@
         android:textStyle="bold"
         android:textColor="@android:color/black"
         android:textSize="24dp"
-        android:text="Set Mantra"
+        android:text="Select Mantra"
         />
+
+
+    <Spinner
+        android:id="@+id/mantra_spinner"
+        android:padding="5dp"
+        android:spinnerMode="dropdown"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
 
     <EditText
         android:id="@+id/edit1"
+        android:visibility="gone"
+        android:hint="Set custom mantra"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text" />

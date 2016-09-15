@@ -8,4 +8,15 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="mantra">ॐ नमः शिवाय</string>
+    <string-array name="mantra_array">
+        <item>mantra 1</item>
+        <item>mantra 2</item>
+        <item>mantra 3</item>
+        <item>mantra 4</item>
+        <item>mantra 5</item>
+        <item>mantra 6</item>
+        <item>mantra 7</item>
+        <item>mantra 8</item>
+        <item>Set your own mantra</item>
+    </string-array>
 </resources>

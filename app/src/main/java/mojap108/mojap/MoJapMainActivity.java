@@ -39,6 +39,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
@@ -470,16 +471,50 @@ public class MoJapMainActivity extends Activity implements OnGestureListener {
         LayoutInflater inflater = this.getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.setmantra, null);
         dialogBuilder.setView(dialogView);
-
-        final EditText edt = (EditText) dialogView.findViewById(R.id.edit1);
         final AlertDialog b = dialogBuilder.create();
+        final EditText edt = (EditText) dialogView.findViewById(R.id.edit1);
+        final Spinner spinner = (Spinner) dialogView.findViewById(R.id.mantra_spinner);
+        spinner.setVerticalScrollBarEnabled(true);
+       /* ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.mantra_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);*/
+        final String[] mantraArray = getResources().getStringArray(R.array.mantra_array);
+        MySpinnerAdapter spinnerAdapter = new MySpinnerAdapter(mantraArray, this);
+        spinner.setAdapter(spinnerAdapter);
+
+        final int totalItemCount = mantraArray.length;
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if(i == totalItemCount - 1) {
+                    spinner.setVisibility(View.GONE);
+                    edt.setVisibility(View.VISIBLE);
+                }else {
+                    mantraText = mantraArray[i];
+                   /* AppData.getInstance(MoJapMainActivity.this).setMantraText(mantraText);
+                    refreshViewData();
+                    b.dismiss();*/
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+
+
+
         //dialogBuilder.setTitle("Set Mantra");
         // dialogBuilder.setMessage("Enter text below");
         Button setButton = (Button)dialogView.findViewById(R.id.setButton);
         setButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String mantraText = edt.getText().toString();
+                if(edt.getVisibility() == View.VISIBLE) {
+                    mantraText = edt.getText().toString();
+                }
                 AppData.getInstance(MoJapMainActivity.this).setMantraText(mantraText);
                 refreshViewData();
                 b.dismiss();
