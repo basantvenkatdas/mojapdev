@@ -42,6 +42,7 @@
             android:layout_width="wrap_content"
             android:background="@drawable/button_day_selector"
             android:text="Day"
+            android:textColor="@android:color/black"
             android:layout_height="wrap_content" />
 
         <Button
@@ -50,6 +51,7 @@
             android:layout_marginLeft="-2dp"
             android:background="@drawable/button_week_selector"
             android:text="Week"
+            android:textColor="@android:color/black"
             android:layout_height="wrap_content" />
 
         <Button
@@ -58,6 +60,7 @@
             android:layout_marginLeft="-2dp"
             android:background="@drawable/button_month_selector"
             android:text="Month"
+            android:textColor="@android:color/black"
             android:layout_height="wrap_content" />
 
     </LinearLayout>

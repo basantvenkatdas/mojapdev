@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.HandlerThread;
 import android.support.v4.content.ContextCompat;
@@ -38,6 +40,9 @@ import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ViewPortHandler;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -65,6 +70,11 @@ public class LineChartActivity extends Activity implements OnChartValueSelectedL
     private TextView highestMalaCountDate;
     private String timeZoneName = null;
     private ProgressDialog progress;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,8 +83,8 @@ public class LineChartActivity extends Activity implements OnChartValueSelectedL
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_linechart);
 
-       // tvX = (TextView) findViewById(R.id.tvXMax);
-     //   tvY = (TextView) findViewById(R.id.tvYMax);
+        // tvX = (TextView) findViewById(R.id.tvXMax);
+        //   tvY = (TextView) findViewById(R.id.tvYMax);
 
         setUpButtonView();
         setUpHighestCountViews();
@@ -90,8 +100,8 @@ public class LineChartActivity extends Activity implements OnChartValueSelectedL
         mChart = (LineChart) findViewById(R.id.chart1);
         mChart.setOnChartValueSelectedListener(this);
 
-      //  mChart.setDrawBarShadow(false);
-      //  mChart.setDrawValueAboveBar(true);
+        //  mChart.setDrawBarShadow(false);
+        //  mChart.setDrawValueAboveBar(true);
 
         mChart.setDescription("");
         mChart.setDrawBorders(false);
@@ -108,32 +118,32 @@ public class LineChartActivity extends Activity implements OnChartValueSelectedL
         mChart.setDrawGridBackground(false);
         // mChart.setDrawYLabels(false);
 
-     //   mTf = Typeface.createFromAsset(getAssets(), "OpenSans-Regular.ttf");
+        //   mTf = Typeface.createFromAsset(getAssets(), "OpenSans-Regular.ttf");
 
         XAxis xAxis = mChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setAxisLineColor(Color.BLACK);
         xAxis.setAxisLineWidth(3);
-      //  xAxis.setTypeface(mTf);
+        //  xAxis.setTypeface(mTf);
         xAxis.setDrawGridLines(false);
 
         xAxis.setDrawLimitLinesBehindData(false);
         xAxis.setSpaceBetweenLabels(2);
 
-       // YAxisValueFormatter custom = new MyYAxisValueFormatter();
+        // YAxisValueFormatter custom = new MyYAxisValueFormatter();
 
-       // YAxis leftAxis = mChart.getAxisLeft();
+        // YAxis leftAxis = mChart.getAxisLeft();
         YAxis leftAxis = mChart.getAxisLeft();
         leftAxis.setAxisMinValue(0);
         leftAxis.setAxisLineColor(Color.BLACK);
         leftAxis.setAxisLineWidth(3);
         leftAxis.removeAllLimitLines(); // reset all limit lines to avoid overlapping lines
-       // leftAxis.addLimitLine(ll1);
-       // leftAxis.addLimitLine(ll2);
-       // leftAxis.setAxisMaxValue(200f);
+        // leftAxis.addLimitLine(ll1);
+        // leftAxis.addLimitLine(ll2);
+        // leftAxis.setAxisMaxValue(200f);
         //leftAxis.setAxisMinValue(-50f);
         //leftAxis.setYOffset(20f);
-      //  leftAxis.enableGridDashedLine(10f, 10f, 0f);
+        //  leftAxis.enableGridDashedLine(10f, 10f, 0f);
         leftAxis.setDrawZeroLine(true);
         leftAxis.setDrawGridLines(false);
         // limit lines are drawn behind data (and not on top)
@@ -169,8 +179,11 @@ public class LineChartActivity extends Activity implements OnChartValueSelectedL
             }
         }, 2000);
 
-       // setData(7, 50);
+        // setData(7, 50);
 
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     private void startProgressDialog() {
@@ -181,8 +194,8 @@ public class LineChartActivity extends Activity implements OnChartValueSelectedL
 
 
     private void setUpHighestCountViews() {
-        highestMalaCount = (TextView)findViewById(R.id.highestmalacount);
-        highestMalaCountDate = (TextView)findViewById(R.id.highestmalacountdate);
+        highestMalaCount = (TextView) findViewById(R.id.highestmalacount);
+        highestMalaCountDate = (TextView) findViewById(R.id.highestmalacountdate);
     }
 
     private void calculateTimeZonOffset() {
@@ -199,21 +212,26 @@ public class LineChartActivity extends Activity implements OnChartValueSelectedL
     }
 
     private void setUpButtonView() {
-        final Button dayButton = (Button)findViewById(R.id.dayButton);
-        final Button weekButton = (Button)findViewById(R.id.weekButton);
-        final Button monthButton = (Button)findViewById(R.id.monthButton);
+        final Button dayButton = (Button) findViewById(R.id.dayButton);
+        final Button weekButton = (Button) findViewById(R.id.weekButton);
+        final Button monthButton = (Button) findViewById(R.id.monthButton);
         int blueColor = ContextCompat.getColor(LineChartActivity.this, android.R.color.holo_blue_light);
-        dayButton.setBackground(LineChartActivity.this.getDrawable(R.drawable.button_day_selected));
+
+        changeBackground(dayButton, R.drawable.button_day_selected);
+       // dayButton.setBackground(LineChartActivity.this.getDrawable(R.drawable.button_day_selected));
 
         dayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int blueColor = ContextCompat.getColor(LineChartActivity.this, android.R.color.holo_blue_light);
                 view.setBackgroundColor(blueColor);
-                view.setBackground(LineChartActivity.this.getDrawable(R.drawable.button_day_selected));
+                changeBackground(view, R.drawable.button_day_selected);
+             //   view.setBackground(LineChartActivity.this.getDrawable(R.drawable.button_day_selected));
                 requestData("day");
-                weekButton.setBackground(LineChartActivity.this.getDrawable(R.drawable.button_week_normal));
-                monthButton.setBackground(LineChartActivity.this.getDrawable(R.drawable.button_month_normal));
+               // weekButton.setBackground(LineChartActivity.this.getDrawable(R.drawable.button_week_normal));
+                changeBackground(weekButton, R.drawable.button_week_normal);
+              //  monthButton.setBackground(LineChartActivity.this.getDrawable(R.drawable.button_month_normal));
+                changeBackground(monthButton, R.drawable.button_month_normal);
             }
         });
 
@@ -222,9 +240,12 @@ public class LineChartActivity extends Activity implements OnChartValueSelectedL
             public void onClick(View view) {
                 int blueColor = ContextCompat.getColor(LineChartActivity.this, android.R.color.holo_blue_light);
                 requestData("week");
-                view.setBackground(LineChartActivity.this.getDrawable(R.drawable.button_week_selected));
-                dayButton.setBackground(LineChartActivity.this.getDrawable(R.drawable.button_day_normal));
-                monthButton.setBackground(LineChartActivity.this.getDrawable(R.drawable.button_month_normal));
+             //   view.setBackground(LineChartActivity.this.getDrawable(R.drawable.button_week_selected));
+                changeBackground(view, R.drawable.button_week_selected);
+              //  dayButton.setBackground(LineChartActivity.this.getDrawable(R.drawable.button_day_normal));
+                changeBackground(dayButton, R.drawable.button_day_normal);
+            //    monthButton.setBackground(LineChartActivity.this.getDrawable(R.drawable.button_month_normal));
+                changeBackground(monthButton, R.drawable.button_month_normal);
             }
         });
 
@@ -232,24 +253,36 @@ public class LineChartActivity extends Activity implements OnChartValueSelectedL
             @Override
             public void onClick(View view) {
                 int blueColor = ContextCompat.getColor(LineChartActivity.this, android.R.color.holo_blue_light);
-                view.setBackground(LineChartActivity.this.getDrawable(R.drawable.button_month_selected));
+              //  view.setBackground(LineChartActivity.this.getDrawable(R.drawable.button_month_selected));
+                changeBackground(view, R.drawable.button_month_selected);
                 requestData("month");
-                dayButton.setBackground(LineChartActivity.this.getDrawable(R.drawable.button_day_normal));
-                weekButton.setBackground(LineChartActivity.this.getDrawable(R.drawable.button_week_normal));
+               // dayButton.setBackground(LineChartActivity.this.getDrawable(R.drawable.button_day_normal));
+                changeBackground(dayButton, R.drawable.button_day_normal);
+               // weekButton.setBackground(LineChartActivity.this.getDrawable(R.drawable.button_week_normal));
+                changeBackground(weekButton, R.drawable.button_week_normal);
             }
         });
     }
 
+    private void changeBackground(View  view, int resId) {
+        int sdk = android.os.Build.VERSION.SDK_INT;
+        if(sdk < Build.VERSION_CODES.LOLLIPOP) {
+            view.setBackgroundResource(resId);
+        } else {
+            view.setBackground(LineChartActivity.this.getDrawable(resId));
+        }
+    }
+
     private void requestData(final String timePeriod) {
         final DigitsData mData = AppData.getInstance(getApplicationContext()).getDigitsData();
-        String url = Constants.BASE_URL + Constants.GET_ACTIVITY+"/"+mData.getAuthId()+"/"+timePeriod+"?offset="+timeZoneName;//(offsetHours/(3600*1000));
+        String url = Constants.BASE_URL + Constants.GET_ACTIVITY + "/" + mData.getAuthId() + "/" + timePeriod + "?offset=" + timeZoneName;//(offsetHours/(3600*1000));
         RequestQueue mQueue = Volley.newRequestQueue(getApplicationContext());
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("CharData", "JSON response="+response.toString());
+                        Log.d("CharData", "JSON response=" + response.toString());
                         parseActivityData(response, timePeriod);
                         Log.d("MojapDataUpload", "activity successfully uploaded");
                     }
@@ -265,7 +298,7 @@ public class LineChartActivity extends Activity implements OnChartValueSelectedL
     }
 
     private void parseActivityData(JSONObject response, String timePeriod) {
-        Log.d("ChartActivity","the parseactivitydata, timeperiod="+timePeriod);
+        Log.d("ChartActivity", "the parseactivitydata, timeperiod=" + timePeriod);
         mXvaluesDay.clear();
         mBeadCountsDay.clear();
         /*JSONObject ob = new JSONObject();
@@ -279,75 +312,75 @@ public class LineChartActivity extends Activity implements OnChartValueSelectedL
 
         int max = 0;
         JSONObject highestMalaData = response.optJSONObject("highestActivity");
-        if(highestMalaData != null) {
+        if (highestMalaData != null) {
             int count = highestMalaData.optInt("beedCount");
             String date = highestMalaData.optString("dateTime");
             updateHighestMalaData(count, date);
         }
         JSONArray dataArray = response.optJSONArray("value");
         try {
-        for(int i =0;i< dataArray.length();i++) {
-            JSONObject activityObject = dataArray.getJSONObject(i);
-            String pValue = activityObject.optString("dateTime");
-            int beadCount = activityObject.optInt("beedCount");
-            if (pValue != null) {
-                mXvaluesDay.add(getFormattedXAxisValue(pValue, timePeriod));
-                mBeadCountsDay.add(new Integer(beadCount));
-                max = Math.max(beadCount, max);
+            for (int i = 0; i < dataArray.length(); i++) {
+                JSONObject activityObject = dataArray.getJSONObject(i);
+                String pValue = activityObject.optString("dateTime");
+                int beadCount = activityObject.optInt("beedCount");
+                if (pValue != null) {
+                    mXvaluesDay.add(getFormattedXAxisValue(pValue, timePeriod));
+                    mBeadCountsDay.add(new Integer(beadCount));
+                    max = Math.max(beadCount, max);
+                }
             }
-        }
             skipLabels(timePeriod);
-        updateChartWithData(mXvaluesDay, mBeadCountsDay, max);
+            updateChartWithData(mXvaluesDay, mBeadCountsDay, max);
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
     private void updateHighestMalaData(int count, String date) {
-        if(highestMalaCount != null) {
-            highestMalaCount.setText(String.valueOf((int)count/Constants.BEAD_TO_MALA_RATIO)+" Malas");
+        if (highestMalaCount != null) {
+            highestMalaCount.setText(String.valueOf((int) count / Constants.BEAD_TO_MALA_RATIO) + " Malas");
         }
         SimpleDateFormat sp = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         String dateString = "2016-01-01";
         try {
-           // dateString =  sp.parse(date).toString();
+            // dateString =  sp.parse(date).toString();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
             dateString = sdf.format(sp.parse(date));
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        if(highestMalaCountDate != null) {
+        if (highestMalaCountDate != null) {
             highestMalaCountDate.setText(dateString);
         }
     }
 
     private void skipLabels(String timePeriod) {
-        if(timePeriod.equals("day")) {
-           mChart.getXAxis().setLabelsToSkip(2);
-        }else if(timePeriod.equals("week")) {
+        if (timePeriod.equals("day")) {
+            mChart.getXAxis().setLabelsToSkip(2);
+        } else if (timePeriod.equals("week")) {
             mChart.getXAxis().setLabelsToSkip(0);
-        }else if(timePeriod.equals("month")) {
+        } else if (timePeriod.equals("month")) {
             mChart.getXAxis().setLabelsToSkip(5);
         }
     }
 
     private String getFormattedXAxisValue(String pValue, String timePeriod) {
-        if(timePeriod.equals("day")) {
+        if (timePeriod.equals("day")) {
             return getHoursString(pValue);
-        }else if(timePeriod.equals("week")) {
+        } else if (timePeriod.equals("week")) {
             return getWeekDay(pValue);
-        }else if(timePeriod.equals("month")) {
+        } else if (timePeriod.equals("month")) {
             return getMonthDay(pValue);
         }
         return "";
     }
 
     private String getMonthDay(String value) {
-      //  value = value.substring(0, value.lastIndexOf("."));
-        Calendar cal1  = getCalendar(value);
+        //  value = value.substring(0, value.lastIndexOf("."));
+        Calendar cal1 = getCalendar(value);
         int dayOfMonth = cal1.get(Calendar.DAY_OF_MONTH);
         int month = cal1.get(Calendar.MONTH);
-        return String.valueOf(month+1)+"/"+String.valueOf(dayOfMonth+1);
+        return String.valueOf(month + 1) + "/" + String.valueOf(dayOfMonth + 1);
     }
 
     public Calendar getCalendar(String dateString) {
@@ -367,20 +400,20 @@ public class LineChartActivity extends Activity implements OnChartValueSelectedL
 
 
     private String getWeekDay(String value) {
-        Calendar cal1  = getCalendar(value);
+        Calendar cal1 = getCalendar(value);
         int dayOfMonth = cal1.get(Calendar.DAY_OF_MONTH);
         int month = cal1.get(Calendar.MONTH);
-        return String.valueOf(month+1)+"/"+String.valueOf(dayOfMonth+1);
+        return String.valueOf(month + 1) + "/" + String.valueOf(dayOfMonth + 1);
     }
 
     private String getHoursString(String val) {
-     //   val = val.substring(0, val.lastIndexOf("."));
-        Calendar cal1  = getCalendar(val);
+        //   val = val.substring(0, val.lastIndexOf("."));
+        Calendar cal1 = getCalendar(val);
         int hour = cal1.get(Calendar.HOUR_OF_DAY);
         int temp = hour % 12;
-        if(hour / 12 > 0) {
+        if (hour / 12 > 0) {
             return String.valueOf(temp) + " pm";
-        }else {
+        } else {
             return String.valueOf(temp) + " am";
         }
     }
@@ -395,7 +428,7 @@ public class LineChartActivity extends Activity implements OnChartValueSelectedL
         LineDataSet set1 = new LineDataSet(yVals1, "Bead Count");
 
 //        BarDataSet set1 = new BarDataSet(yVals1, "BeadCount");
-      //  set1.setBarSpacePercent(35f);
+        //  set1.setBarSpacePercent(35f);
 
         set1.enableDashedLine(10f, 5f, 0f);
         set1.enableDashedHighlightLine(10f, 5f, 0f);
@@ -418,7 +451,7 @@ public class LineChartActivity extends Activity implements OnChartValueSelectedL
         data.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float v, Entry entry, int i, ViewPortHandler viewPortHandler) {
-                return String.valueOf((int)v);
+                return String.valueOf((int) v);
             }
         });
         data.setValueTextSize(10f);
@@ -447,7 +480,7 @@ public class LineChartActivity extends Activity implements OnChartValueSelectedL
         }
 
         LineDataSet set1 = new LineDataSet(yVals1, "Bead Count");
-      //  set1.setBarSpacePercent(35f);
+        //  set1.setBarSpacePercent(35f);
         set1.setColor(Color.BLACK);
         set1.enableDashedLine(10f, 5f, 0f);
         set1.enableDashedHighlightLine(10f, 5f, 0f);
@@ -460,14 +493,13 @@ public class LineChartActivity extends Activity implements OnChartValueSelectedL
         set1.setDrawFilled(true);
 
 
-
         ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
         dataSets.add(set1);
 
         LineData data = new LineData(xVals, dataSets);
         data.setValueTextSize(10f);
 
-      //  data.setValueTypeface(mTf);
+        //  data.setValueTypeface(mTf);
 
         mChart.setData(data);
     }
@@ -481,5 +513,45 @@ public class LineChartActivity extends Activity implements OnChartValueSelectedL
     @Override
     public void onNothingSelected() {
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "LineChart Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app URL is correct.
+                Uri.parse("android-app://mojap108.mojap/http/host/path")
+        );
+        AppIndex.AppIndexApi.start(client, viewAction);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "LineChart Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app URL is correct.
+                Uri.parse("android-app://mojap108.mojap/http/host/path")
+        );
+        AppIndex.AppIndexApi.end(client, viewAction);
+        client.disconnect();
     }
 }
